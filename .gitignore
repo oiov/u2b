@@ -1,0 +1,7 @@
+videos
+task_work.log
+cookies.json
+qrcode.*
+*.mp4
+__pycache__
+.DS_Store
