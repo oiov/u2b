@@ -130,13 +130,23 @@ def main(vUrl, TID, plain_title=True):
     tags.append(OWNER_NAME)
     
     # init youtube video info
+
+    # Ensure videos directory exists
+    videos_dir = "videos"
+    if not os.path.exists(videos_dir):
+        os.mkdir(videos_dir)
+
+    # Create sub-directory for the specific video
+    sub_dir = os.path.join(videos_dir, str(id_))
     try:
-        os.mkdir(path="./videos/" + str(id_))
+        os.mkdir(sub_dir)
     except FileExistsError:
-        shutil.rmtree("./videos/" + str(id_))
+        shutil.rmtree(sub_dir)
+        os.mkdir(sub_dir)
+
     download(vUrl, id_)
     download_image(cover, id_)
-    cover_webp_to_jpg("./videos/" + str(id_) + "/cover.webp", "./videos/" + str(id_) + "/cover.jpg")
+    cover_webp_to_jpg(os.path.join(sub_dir, "cover.webp"), os.path.join(sub_dir, "cover.jpg"))
 
     # if plain_title:
     #     if not judge_chs(title):  # 不包含中文
@@ -177,11 +187,10 @@ def main(vUrl, TID, plain_title=True):
         + " --title "
         + get_double(title)
         + " --cover "
-        + str("./videos/" + str(id_) + "/cover.jpg")
+        + os.path.join(sub_dir, "cover.jpg")
     )
     print("[🚀 origin title]: ", title)
     print("[🚀 Start to using biliup, with these CMD commend]:\n", CMD)
-    # return
     biliupOutput = "".join(os.popen(CMD).readlines())
     if biliupOutput.find("投稿成功") == -1:
         if biliupOutput.find("标题相同") == -1:
@@ -193,12 +202,12 @@ def main(vUrl, TID, plain_title=True):
         else:
             print("👻 视频标题已存在")
             if REMOVE_FILE:
-                shutil.rmtree("./videos/" + str(id_))
+                shutil.rmtree(sub_dir)
     print("\n🎉🎉🎉 投稿成功，感谢使用哔哩哔哩投稿姬！")
     print("⭐⭐⭐ 如果你觉得小姬姬还不错，那就点个赞吧：https://github.com/yesmore/U-To-B\n")
 
     if REMOVE_FILE:
-        shutil.rmtree("./videos/" + str(id_))
+        shutil.rmtree(sub_dir)
 
 
 if __name__ == "__main__":
