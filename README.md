@@ -6,7 +6,7 @@
 
 ```shell
 # 1.本地安装
-git clone https://github.com/yesmore/U-To-B.git
+git clone https://github.com/oiov/u2b.git
 cd U-To-B
 sudo bash setup.sh
 
