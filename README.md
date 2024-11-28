@@ -7,7 +7,7 @@
 ```shell
 # 1.本地安装
 git clone https://github.com/oiov/u2b.git
-cd U-To-B
+cd u2b
 sudo bash setup.sh
 
 # 2.使用biliup登录账号 
