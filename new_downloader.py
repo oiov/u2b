@@ -179,7 +179,7 @@ def main(vUrl, TID, plain_title=True):
         + " --cover "
         + str("./videos/" + str(id_) + "/cover.jpg")
     )
-    print("[🚀 origin title]: ", title)
+    print("[🚀 Original title]: ", title)
     print("[🚀 Start to using biliup, with these CMD commend]:\n", CMD)
     # return
     biliupOutput = "".join(os.popen(CMD).readlines())
