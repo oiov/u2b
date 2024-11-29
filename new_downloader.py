@@ -168,8 +168,18 @@ def main(vUrl, TID, plain_title=True):
     if plain_title:
         vUrl = "youtube.com"
         # description = "-"
+    # Ensure paths are correct
+    videoPath = os.path.normpath(videoPath)  # 规范化视频文件路径
+    coverPath = os.path.normpath(os.path.join(sub_dir, "cover.jpg"))  # 规范化封面路径
+
+    # Determine command based on OS
+    if platform.system() == "Windows":
+        cmd_prefix = os.path.abspath(r".\biliup.exe")  # 使用绝对路径
+    else:
+        cmd_prefix = "./biliup"
+
     CMD = (
-        "./biliup upload "
+        cmd_prefix
         + videoPath
         + " --desc "
         + get_double(description)
