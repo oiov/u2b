@@ -187,7 +187,7 @@ def main(vUrl, TID, plain_title=True):
         if biliupOutput.find("标题相同") == -1:
             print(biliupOutput)
             print(
-                "👻 投稿失败.\n👻 解决问题参考 https://github.com/yesmore/U-To-B/issues or https://github.com/ForgQi/biliup-rs/issues "
+                "👻 投稿失败.\n👻 解决问题参考 https://github.com/oiov/u2b/issues or https://github.com/ForgQi/biliup-rs/issues "
             )
             exit(1)
         else:
