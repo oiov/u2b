@@ -5,6 +5,7 @@ import shutil
 import sys
 import time
 import base64
+import platform
 
 import requests
 import yt_dlp
