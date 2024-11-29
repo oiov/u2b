@@ -181,6 +181,7 @@ def main(vUrl, TID, plain_title=True):
 
     CMD = (
         cmd_prefix
+        + " upload "
         + videoPath
         + " --desc "
         + get_double(description)
