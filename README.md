@@ -6,8 +6,8 @@
 
 ```shell
 # 1.本地安装
-git clone https://github.com/yesmore/U-To-B.git
-cd U-To-B
+git clone https://github.com/oiov/u2b.git
+cd u2b
 sudo bash setup.sh
 
 # 2.使用biliup登录账号 
