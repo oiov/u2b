@@ -5,6 +5,7 @@ import shutil
 import sys
 import time
 import base64
+import platform
 
 import requests
 import yt_dlp
@@ -130,13 +131,23 @@ def main(vUrl, TID, plain_title=True):
     tags.append(OWNER_NAME)
     
     # init youtube video info
+
+    # Ensure videos directory exists
+    videos_dir = "videos"
+    if not os.path.exists(videos_dir):
+        os.mkdir(videos_dir)
+
+    # Create sub-directory for the specific video
+    sub_dir = os.path.join(videos_dir, str(id_))
     try:
-        os.mkdir(path="./videos/" + str(id_))
+        os.mkdir(sub_dir)
     except FileExistsError:
-        shutil.rmtree("./videos/" + str(id_))
+        shutil.rmtree(sub_dir)
+        os.mkdir(sub_dir)
+
     download(vUrl, id_)
     download_image(cover, id_)
-    cover_webp_to_jpg("./videos/" + str(id_) + "/cover.webp", "./videos/" + str(id_) + "/cover.jpg")
+    cover_webp_to_jpg(os.path.join(sub_dir, "cover.webp"), os.path.join(sub_dir, "cover.jpg"))
 
     # if plain_title:
     #     if not judge_chs(title):  # 不包含中文
@@ -158,8 +169,19 @@ def main(vUrl, TID, plain_title=True):
     if plain_title:
         vUrl = "youtube.com"
         # description = "-"
+    # Ensure paths are correct
+    videoPath = os.path.normpath(videoPath)  # 规范化视频文件路径
+    coverPath = os.path.normpath(os.path.join(sub_dir, "cover.jpg"))  # 规范化封面路径
+
+    # Determine command based on OS
+    if platform.system() == "Windows":
+        cmd_prefix = os.path.abspath(r".\biliup.exe")  # 使用绝对路径
+    else:
+        cmd_prefix = "./biliup"
+
     CMD = (
-        "./biliup upload "
+        cmd_prefix
+        + " upload "
         + videoPath
         + " --desc "
         + get_double(description)
@@ -177,11 +199,10 @@ def main(vUrl, TID, plain_title=True):
         + " --title "
         + get_double(title)
         + " --cover "
-        + str("./videos/" + str(id_) + "/cover.jpg")
+        + os.path.join(sub_dir, "cover.jpg")
     )
     print("[🚀 Original title]: ", title)
     print("[🚀 Start to using biliup, with these CMD commend]:\n", CMD)
-    # return
     biliupOutput = "".join(os.popen(CMD).readlines())
     if biliupOutput.find("投稿成功") == -1:
         if biliupOutput.find("标题相同") == -1:
@@ -193,12 +214,12 @@ def main(vUrl, TID, plain_title=True):
         else:
             print("👻 视频标题已存在")
             if REMOVE_FILE:
-                shutil.rmtree("./videos/" + str(id_))
+                shutil.rmtree(sub_dir)
     print("\n🎉🎉🎉 投稿成功，感谢使用哔哩哔哩投稿姬！")
     print("⭐⭐⭐ 如果你觉得小姬姬还不错，那就点个赞吧：https://github.com/oiov/u2b\n")
 
     if REMOVE_FILE:
-        shutil.rmtree("./videos/" + str(id_))
+        shutil.rmtree(sub_dir)
 
 
 if __name__ == "__main__":
