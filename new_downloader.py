@@ -179,7 +179,7 @@ def main(vUrl, TID, plain_title=True):
         + " --cover "
         + str("./videos/" + str(id_) + "/cover.jpg")
     )
-    print("[🚀 origin title]: ", title)
+    print("[🚀 Original title]: ", title)
     print("[🚀 Start to using biliup, with these CMD commend]:\n", CMD)
     # return
     biliupOutput = "".join(os.popen(CMD).readlines())
@@ -195,7 +195,7 @@ def main(vUrl, TID, plain_title=True):
             if REMOVE_FILE:
                 shutil.rmtree("./videos/" + str(id_))
     print("\n🎉🎉🎉 投稿成功，感谢使用哔哩哔哩投稿姬！")
-    print("⭐⭐⭐ 如果你觉得小姬姬还不错，那就点个赞吧：https://github.com/yesmore/U-To-B\n")
+    print("⭐⭐⭐ 如果你觉得小姬姬还不错，那就点个赞吧：https://github.com/oiov/u2b\n")
 
     if REMOVE_FILE:
         shutil.rmtree("./videos/" + str(id_))
